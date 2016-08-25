@@ -1,2 +1,3 @@
 # docx2md
-Jet ugly but get the job done. Convert `docx` to `markdown` using `pandoc`.
+
+Yet ugly simple script but get the job done. Convert `docx` to `markdown` using `pandoc`.
