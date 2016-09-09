@@ -46,6 +46,17 @@ convertfiles()
     # Loop through all item in the WORKDIR
     for item in *;
     do
+        # Replace all space in filename/foldername with hyphen if there is
+        case "$item" in
+            *\ *)
+                itemnew=${item// /-}
+                echo -e "\tREMOVE ALL SPACES"
+                mv -v "$item" "$itemname"
+                ;;
+            *)
+                itemnew=${item}
+                ;;
+        esac
         # If the item is a dir, cd to it
         if [ -d "$item" ]
         then
