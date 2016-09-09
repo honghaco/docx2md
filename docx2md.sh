@@ -49,14 +49,31 @@ convertfiles()
         # Replace all space in filename/foldername with hyphen if there is
         case "$item" in
             *\ *)
-                itemnew=${item// /-}
+                item=${item// /-}
                 echo -e "\tREMOVE ALL SPACES"
                 mv -v "$item" "$itemname"
                 ;;
             *)
-                itemnew=${item}
+                item=${item}
                 ;;
         esac
+
+        # Convert the unicode charts to us-ascii charts
+        # lowercase the item name
+        echo -e "\tlowercase ALL THE NAMES"
+        echo "$item" > /tmp/tempname
+        local tmpname=$(perl -C -MText::Unidecode -n -e'print unidecode( $_ )' /tmp/tempname)
+        echo "$tempname" > /tmp/tempname
+        local tmpname=$(sed -E 's/([[:upper:]])/\L\1/g' /tmp/tempname)
+
+        # Rename the item to new one
+        if [ "$item" != "$tmpname" ]
+        then
+            echo -e "\t--- RENAME ---"
+            mv -v "$item" "$tmpname"
+            item="$tmpname"
+        fi
+
         # If the item is a dir, cd to it
         if [ -d "$item" ]
         then
