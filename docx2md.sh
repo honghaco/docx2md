@@ -43,6 +43,31 @@ convertfiles()
     echo -e "\t$WORKDIR"
     echo -e "\t--- ========================== ---\n"
 
+    # Loop through all item in the WORKDIR
+    for item in *;
+    do
+        # If the item is a dir, cd to it
+        if [ -d "$item" ]
+        then
+            echo -e "\t '$item' IS A SUB DIR"
+            # Call the function itself to this folder
+            convertfiles "$item"
+            # Go back to the father dir
+            cd ..
+        # If the item is a file, check if it is a doc or docx file
+        elif [ -f "$item" ]
+        then
+            case "$item" in
+                *.doc)
+                    echo "\tThis is a DOC file"
+                    ;;
+                *.docx)
+                    echo "\tThis is a DOCX file"
+                    ;;
+            esac
+
+        fi
+    done
 }
 
 convertfiles $SOURCEDIR
