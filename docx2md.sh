@@ -1,17 +1,10 @@
 #!/bin/bash
-
 #                               .___                     
 #     ___________    _____    __| _/__  ___              
 #    /  ___/\__  \  /     \  / __ |\  \/  /              
 #    \___ \  / __ \|  Y Y  \/ /_/ | >    <               
 #   /____  >(____  /__|_|  /\____ |/__/\_ \              
 #        \/      \/      \/      \/      \/              
-#   _______________  ____  ________                      
-#   \_____  \   _  \/_   |/  _____/                      
-#    /  ____/  /_\  \|   /   __  \                       
-#   /       \  \_/   \   \  |__\  \                      
-#   \_______ \_____  /___|\_____  /                      
-#           \/     \/           \/                       
 
 # http://patorjk.com/software/taag/#p=display&f=Graffiti
 
@@ -40,6 +33,7 @@ doc2docx()
 
     echo -e "\tTHE DOC FILE IS: $DOCFILE"
     echo -e "\tI'M GOING TO CONVERT THE DOC TO DOCX FORMAT."
+    # Call LIBREOFFICE
     soffice --convert-to "docx" "$DOCFILE"
     echo -e "\tTHE $DOCFILE HAS BEEN CONVERTED SUCCESSFULLY."
     echo -e "\tIT'S READY TO BE REMOVED."
@@ -75,6 +69,7 @@ docx2md()
         mkdir -pv "$MEDIADIR"
     fi
 
+    # Call PANDOC
     pandoc -f docx -t markdown --extract-media="$MEDIADIR" \
     -o "$MARKDOWNFILE" "$DOCXFILE"
     sleep 2
@@ -138,10 +133,12 @@ convertfiles()
         then
             case "$item" in
                 *.doc)
-                    echo "\tThis is a DOC file"
+                    doc2docx "$item"
+                    local docxfile=`basename "item" doc`docx
+                    docx2md "$docxfile"
                     ;;
                 *.docx)
-                    echo "\tThis is a DOCX file"
+                    docx2md "$item"
                     ;;
             esac
 
@@ -150,4 +147,8 @@ convertfiles()
 }
 
 convertfiles $SOURCEDIR
+
+# TODO
+# - pandoc's templates
+# - pandoc title block
 
