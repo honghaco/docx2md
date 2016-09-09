@@ -41,7 +41,8 @@ doc2docx()
     echo -e "\tTHE DOC FILE IS: $DOCFILE"
     echo -e "\tI'M GOING TO CONVERT THE DOC TO DOCX FORMAT."
     soffice --convert-to "docx" "$DOCFILE"
-    echo -e "\tTHE $DOCFILE HAS BEEN CONVERTED SUCCESSFULLY. IT'S READY TO BE REMOVE."
+    echo -e "\tTHE $DOCFILE HAS BEEN CONVERTED SUCCESSFULLY."
+    echo -e "\tIT'S READY TO BE REMOVED."
     rm -v "$DOCFILE"
 }
 
