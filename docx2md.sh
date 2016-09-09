@@ -46,6 +46,44 @@ doc2docx()
     rm -v "$DOCFILE"
 }
 
+relativepath()
+{
+    FILETOPROCESS="$1"
+    CWD=$(pwd)
+    # GNU sed only. If your sed does not come with -i, you should copy/rename
+    # the file manually
+    echo -e "\tMARKDOWN: RELATIVE PATH FOR MEDIA FILES"
+    sed -i "s:$CWD/::g" "$FILETOPROCESS"
+}
+
+docx2md()
+{
+    # The docx file is the $1.
+    DOCXFILE="$1"
+
+    echo -e "\n"
+    MARKDOWNFILE=`basename "$DOCXFILE" docx`md
+    echo -e "\tTHE $DOCXFILE FILE WILL BE CONVERT TO:"
+    echo -e "\t---> $MARKDOWNFILE <--"
+    MEDIADIRNAME=`basename "$DOCXFILE" .docx`-media
+    MEDIADIR="$(pwd)/$MEDIADIRNAME"
+
+    if [ ! -d "$MEDIADIR" ]
+    then
+        echo -e "\n"
+        echo -e "\tMAKE NEW FOLDER FOR MEDIA FILES STORING"
+        mkdir -pv "$MEDIADIR"
+    fi
+
+    pandoc -f docx -t markdown --extract-media="$MEDIADIR" \
+    -o "$MARKDOWNFILE" "$DOCXFILE"
+    sleep 2
+
+    # Replace all the media absolute path by the relative path in the markdown
+    # output file
+    relativepath "$MARKDOWNFILE"
+}
+
 convertfiles()
 {
     # The working-dir is the $1, cd to that dir
