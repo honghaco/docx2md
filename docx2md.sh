@@ -55,7 +55,6 @@ docx2md()
     # The docx file is the $1.
     DOCXFILE="$1"
 
-    echo -e "\n"
     MARKDOWNFILE=`basename "$DOCXFILE" docx`md
     echo -e "\tTHE $DOCXFILE FILE WILL BE CONVERT TO:"
     echo -e "\t---> $MARKDOWNFILE <--"
@@ -64,7 +63,6 @@ docx2md()
 
     if [ ! -d "$MEDIADIR" ]
     then
-        echo -e "\n"
         echo -e "\tMAKE NEW FOLDER FOR MEDIA FILES STORING"
         mkdir -pv "$MEDIADIR"
     fi
@@ -95,9 +93,10 @@ convertfiles()
         # Replace all space in filename/foldername with hyphen if there is
         case "$item" in
             *\ *)
-                item=${item// /-}
+                local itemname=${item// /-}
                 echo -e "\tREMOVE ALL SPACES"
                 mv -v "$item" "$itemname"
+                item="${itemname}"
                 ;;
             *)
                 item=${item}
@@ -109,7 +108,7 @@ convertfiles()
         echo -e "\tlowercase ALL THE NAMES"
         echo "$item" > /tmp/tempname
         local tmpname=$(perl -C -MText::Unidecode -n -e'print unidecode( $_ )' /tmp/tempname)
-        echo "$tempname" > /tmp/tempname
+        echo "$tmpname" > /tmp/tempname
         local tmpname=$(sed -E 's/([[:upper:]])/\L\1/g' /tmp/tempname)
 
         # Rename the item to new one
@@ -146,7 +145,7 @@ convertfiles()
     done
 }
 
-convertfiles $SOURCEDIR
+convertfiles "$SOURCEDIR"
 
 # TODO
 # - pandoc's templates
