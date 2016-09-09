@@ -25,7 +25,7 @@ if [ -n "$1" ]; then
     readonly SOURCEDIR="$1"
     echo -e "\tYOU'VE SPECIFIED THE SOURCE DIR IS:\n"
     echo -e "\t$SOURCEDIR"
-    echo -e "\CD TO THE WORKDIR"
+    echo -e "\tCD TO THE WORKDIR"
     cd "$SOURCEDIR"
 else
     echo -e "\tYOU'VE NOT SPECIFIED THE SOURCE DIR."
