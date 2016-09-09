@@ -33,6 +33,18 @@ else
     SOURCEDIR="$(pwd)"
 fi
 
+doc2docx()
+{
+    # The doc file is the $1.
+    DOCFILE="$1"
+
+    echo -e "\tTHE DOC FILE IS: $DOCFILE"
+    echo -e "\tI'M GOING TO CONVERT THE DOC TO DOCX FORMAT."
+    soffice --convert-to "docx" "$DOCFILE"
+    echo -e "\tTHE $DOCFILE HAS BEEN CONVERTED SUCCESSFULLY. IT'S READY TO BE REMOVE."
+    rm -v "$DOCFILE"
+}
+
 convertfiles()
 {
     # The working-dir is the $1, cd to that dir
