@@ -32,3 +32,18 @@ else
     echo -e "\tTHEN THE SOURCE DIR IS THE CURRENT-WORKING-DIR."
     SOURCEDIR="$(pwd)"
 fi
+
+convertfiles()
+{
+    # The working-dir is the $1, cd to that dir
+    WORKDIR="$1"
+    cd "$WORKDIR"
+
+    echo -e "\t--- CONVERTING FILES IN FOLDER ---"
+    echo -e "\t$WORKDIR"
+    echo -e "\t--- ========================== ---\n"
+
+}
+
+convertfiles $SOURCEDIR
+
