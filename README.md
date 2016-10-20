@@ -8,7 +8,14 @@ And, I don't wanna play with a word proccessor every time I need to see what it 
 
 Then, I know I have to convert these word files to a text-based format. Yes, `markdown`, of course, the most widely-used and simplest markup format of humanity :3. And yes, `pandoc`, a great tool to convert-a-file-format-to-another-file-format.
 
-Here what the script actually does:
+## Requirements:
+- [ ] Shell that support text substitution.
+- [ ] GNU `sed` (`-i` for inline-replacement). Most Linux distro.
+- [ ] LibreOffice.
+- [ ] Perl (> `v5.x.x`) comes with Unicode module.
+- [ ] Pandoc, of course.
+
+## Here what the script actually does:
 
 - [x] Walks through the folder with multi-level sub-folder
 - [x] Watches all the files for `doc` or `docx`:
@@ -23,7 +30,7 @@ Here what the script actually does:
   - [x] Remove the converted `docx` file.
 - [x] Exits the loop.
 
-You have to delete the empty media folder manually (if any).
+Unfortunately, you have to delete the empty media folder manually (if any).
 
 That it.
 
